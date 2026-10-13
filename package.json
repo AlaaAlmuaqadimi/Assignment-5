@@ -1,0 +1,17 @@
+{
+  "name": "sequelize-assignment",
+  "version": "1.0.0",
+  "description": "Sequelize Assignment 5 - Models, Validations & APIs",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "demo": "node index.js",
+    "bonus": "node bonus.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "sequelize": "^6.37.3",
+    "sqlite3": "^5.1.7",
+    "dotenv": "^16.4.5"
+  }
+}

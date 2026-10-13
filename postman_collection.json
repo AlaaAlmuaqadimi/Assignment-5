@@ -1,0 +1,280 @@
+{
+  "info": {
+    "name": "Assignment 5 - Sequelize API",
+    "description": "Complete API collection for User, Post, and Comment endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ],
+  "item": [
+    {
+      "name": "User APIs",
+      "item": [
+        {
+          "name": "Create User (Signup)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"User One\",\n  \"email\": \"user1@gmail.com\",\n  \"password\": \"securePassword123\",\n  \"role\": \"user\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/signup",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "signup"]
+            },
+            "description": "Create a new user using build + save. Checks if email already exists before creating."
+          }
+        },
+        {
+          "name": "Create or Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Name\",\n  \"email\": \"updated@test.com\",\n  \"role\": \"user\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/5",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "5"]
+            },
+            "description": "Create or update a user based on PK. Uses validate: false to skip validation."
+          }
+        },
+        {
+          "name": "Get User by Email",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/users/by-email?email=user1@gmail.com",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "by-email"],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "user1@gmail.com"
+                }
+              ]
+            },
+            "description": "Find a user by their email address."
+          }
+        },
+        {
+          "name": "Get User by PK",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/users/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "1"]
+            },
+            "description": "Retrieve user by PK, excluding the role field."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Post APIs",
+      "item": [
+        {
+          "name": "Create Post",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"First Post\",\n  \"content\": \"This is the content of the first post.\",\n  \"userId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/posts",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts"]
+            },
+            "description": "Create a new post. Gets post data from the body."
+          }
+        },
+        {
+          "name": "Delete Post",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/posts/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "1"]
+            },
+            "description": "Delete a post by its ID. Only the owner of the post can perform this action."
+          }
+        },
+        {
+          "name": "Get All Post Details",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/posts/details",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "details"]
+            },
+            "description": "Retrieve all posts including user details and associated comments."
+          }
+        },
+        {
+          "name": "Get All Post Comment Counts",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/posts/comment-count",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "comment-count"]
+            },
+            "description": "Retrieve all posts and count the number of comments associated with each post."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Comment APIs",
+      "item": [
+        {
+          "name": "Create Bulk Comments",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comments\": [\n    {\n      \"content\": \"This is the first comment.\",\n      \"postId\": 1,\n      \"userId\": 1\n    },\n    {\n      \"content\": \"Amazing post!\",\n      \"postId\": 1,\n      \"userId\": 2\n    },\n    {\n      \"content\": \"I totally agree with this post.\",\n      \"postId\": 1,\n      \"userId\": 1\n    },\n    {\n      \"content\": \"Thanks for sharing your thoughts.\",\n      \"postId\": 1,\n      \"userId\": 2\n    },\n    {\n      \"content\": \"Looking forward to more posts like this!\",\n      \"postId\": 2,\n      \"userId\": 1\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/comments",
+              "host": ["{{baseUrl}}"],
+              "path": ["comments"]
+            },
+            "description": "Create a bulk of comments at once."
+          }
+        },
+        {
+          "name": "Update Comment",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 3,\n  \"content\": \"updated\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/comments/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["comments", "1"]
+            },
+            "description": "Update the content of a specific comment by its ID. Only the owner can perform this action."
+          }
+        },
+        {
+          "name": "Find or Create Comment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"postId\": 1,\n  \"userId\": 2,\n  \"content\": \"This is a sample comment\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/comments/find-or-create",
+              "host": ["{{baseUrl}}"],
+              "path": ["comments", "find-or-create"]
+            },
+            "description": "Find a comment for a specific post, user, and content. If it exists, return it; otherwise create a new one."
+          }
+        },
+        {
+          "name": "Search Comments",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/comments/search?word=important",
+              "host": ["{{baseUrl}}"],
+              "path": ["comments", "search"],
+              "query": [
+                {
+                  "key": "word",
+                  "value": "important"
+                }
+              ]
+            },
+            "description": "Retrieve all comments containing a specific word in their content."
+          }
+        },
+        {
+          "name": "Get 3 Most Recent Comments",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/comments/newest/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["comments", "newest", "1"]
+            },
+            "description": "Retrieve the 3 most recent comments for a specific post, ordered by creation date."
+          }
+        },
+        {
+          "name": "Get Comment Details by PK",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/comments/details/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["comments", "details", "1"]
+            },
+            "description": "Get a specific comment by PK with user and post information."
+          }
+        }
+      ]
+    }
+  ]
+}
